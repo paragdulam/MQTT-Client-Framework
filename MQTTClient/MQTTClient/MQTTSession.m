@@ -1555,7 +1555,9 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
 
 - (void)connectWithConnectHandler:(MQTTConnectHandler)connectHandler {
     DDLogVerbose(@"[MQTTSession] connectWithConnectHandler:%p", connectHandler);
-    self.connectHandler = connectHandler;
+    if (connectHandler) {
+        self.connectHandler = connectHandler;
+    }
     [self connect];
 }
 
