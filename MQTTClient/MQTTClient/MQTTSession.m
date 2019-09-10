@@ -576,7 +576,7 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
     NSArray *allSubscribeHandlers = self.subscribeHandlers.allValues;
     [self.subscribeHandlers removeAllObjects];
     for (MQTTSubscribeHandler subscribeHandler in allSubscribeHandlers) {
-        subscribeHandler(error, nil);
+        subscribeHandler(error, -1, nil);
     }
 
     NSArray *allUnsubscribeHandlers = self.unsubscribeHandlers.allValues;
@@ -1325,7 +1325,7 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
 }
 
 - (void)onSubscribe:(MQTTSubscribeHandler)subscribeHandler error:(NSError *)error gQoss:(NSArray *)gqoss {
-    subscribeHandler(error, gqoss);
+    subscribeHandler(error, -1, gqoss);
 }
 
 - (void)onUnsubscribe:(MQTTUnsubscribeHandler)unsubscribeHandler error:(NSError *)error {

@@ -298,7 +298,7 @@
         [self.subscriptionLock unlock];
         if (subscriptions.count) {
             __weak MQTTSessionManager *weakSelf = self;
-            [self.session subscribeToTopics:subscriptions subscribeHandler:^(NSError *error, NSArray<NSNumber *> *gQoss) {
+            [self.session subscribeToTopics:subscriptions subscribeHandler:^(NSError *error, UInt16 messageId, NSArray<NSNumber *> *gQoss) {
                 MQTTSessionManager *strongSelf = weakSelf;
                 if (!error) {
                     NSArray<NSString *> *allTopics = subscriptions.allKeys;
@@ -399,7 +399,7 @@
                 NSNumber *number = newSubscriptions[topicFilter];
                 MQTTQosLevel qos = number.unsignedIntValue;
                 __weak MQTTSessionManager *weakSelf = self;
-                [self.session subscribeToTopic:topicFilter atLevel:qos subscribeHandler:^(NSError *error, NSArray<NSNumber *> *gQoss) {
+                [self.session subscribeToTopic:topicFilter atLevel:qos subscribeHandler:^(NSError *error, UInt16 messageId, NSArray<NSNumber *> *gQoss) {
                     MQTTSessionManager *strongSelf = weakSelf;
                     if (!error) {
                         NSNumber *gQos = gQoss[0];
