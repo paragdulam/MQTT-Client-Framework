@@ -381,7 +381,7 @@
         for (NSString *topicFilter in currentSubscriptions) {
             if (!newSubscriptions[topicFilter]) {
                 __weak MQTTSessionManager *weakSelf = self;
-                [self.session unsubscribeTopic:topicFilter unsubscribeHandler:^(NSError *error) {
+                [self.session unsubscribeTopic:topicFilter unsubscribeHandler:^(NSError *error, UInt16 messageId) {
                     MQTTSessionManager *strongSelf = weakSelf;
                     if (!error) {
                         [strongSelf.subscriptionLock lock];

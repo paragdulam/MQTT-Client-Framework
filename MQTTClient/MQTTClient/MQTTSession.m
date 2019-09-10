@@ -582,7 +582,7 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
     NSArray *allUnsubscribeHandlers = self.unsubscribeHandlers.allValues;
     [self.unsubscribeHandlers removeAllObjects];
     for (MQTTUnsubscribeHandler unsubscribeHandler in allUnsubscribeHandlers) {
-        unsubscribeHandler(error);
+        unsubscribeHandler(error, -1);
     }
 
     MQTTDisconnectHandler disconnectHandler = self.disconnectHandler;
@@ -1115,7 +1115,7 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
         MQTTSubscribeHandler subscribeHandler = (self.subscribeHandlers)[@(msg.mid)];
         if (subscribeHandler) {
             [self.subscribeHandlers removeObjectForKey:@(msg.mid)];
-            [self onSubscribe:subscribeHandler error:nil gQoss:qoss];
+            [self onSubscribe:subscribeHandler error:nil messageId:msg.mid gQoss:qoss];
         }
     }
 }
@@ -1130,7 +1130,7 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
     MQTTUnsubscribeHandler unsubscribeHandler = (self.unsubscribeHandlers)[@(message.mid)];
     if (unsubscribeHandler) {
         [self.unsubscribeHandlers removeObjectForKey:@(message.mid)];
-        [self onUnsubscribe:unsubscribeHandler error:nil];
+        [self onUnsubscribe:unsubscribeHandler error:nil messageId:message.mid];
     }
 }
 
@@ -1324,12 +1324,12 @@ NSString * const MQTTSessionErrorDomain = @"MQTT";
     disconnectHandler(error);
 }
 
-- (void)onSubscribe:(MQTTSubscribeHandler)subscribeHandler error:(NSError *)error gQoss:(NSArray *)gqoss {
-    subscribeHandler(error, -1, gqoss);
+- (void)onSubscribe:(MQTTSubscribeHandler)subscribeHandler error:(NSError *)error messageId:(UInt16)messageId gQoss:(NSArray *)gqoss {
+    subscribeHandler(error, messageId, gqoss);
 }
 
-- (void)onUnsubscribe:(MQTTUnsubscribeHandler)unsubscribeHandler error:(NSError *)error {
-    unsubscribeHandler(error);
+- (void)onUnsubscribe:(MQTTUnsubscribeHandler)unsubscribeHandler error:(NSError *)error messageId:(UInt16)messageId {
+    unsubscribeHandler(error, messageId);
 }
 
 - (void)onPublish:(MQTTPublishHandler)publishHandler error:(NSError *)error {

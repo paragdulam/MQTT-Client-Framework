@@ -274,7 +274,7 @@ typedef NS_ENUM(NSInteger, MQTTSessionError) {
 typedef void (^MQTTConnectHandler)(NSError *error);
 typedef void (^MQTTDisconnectHandler)(NSError *error);
 typedef void (^MQTTSubscribeHandler)(NSError *error, UInt16 messageId, NSArray<NSNumber *> *gQoss);
-typedef void (^MQTTUnsubscribeHandler)(NSError *error);
+typedef void (^MQTTUnsubscribeHandler)(NSError *error, UInt16 messageId);
 typedef void (^MQTTPublishHandler)(NSError *error);
 
 /** Session implements the MQTT protocol for your application
